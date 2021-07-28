@@ -1,20 +1,26 @@
 import './App.css';
-import Player from './components/Player/Player';
-import Dealer from './components/Dealer/Dealer';
-import Deck from './components/Deck/Deck';
 import React, {useState} from 'react';
+import { Redirect, Route, Switch } from "react-router-dom";
 import { deck } from './utilities/cards';
+import BattlePage from './pages/BattlePage/BattlePage';
+import LandingPage from './pages/LandingPage/LandingPage';
 
 function App() {
   var newDeck = new deck();
   console.log(newDeck);
 
-  const [deck, setDeck] = useState(newDeck);
+  const [currentDeck, setCurrentDeck] = useState(newDeck);
   return (
     <div className="App">
-      <Dealer/>
-      <Deck/>
-      <Player/>
+      <Switch>
+        <Route path="/battle" render={(props) => {
+          return <BattlePage {...props}/>
+        }}/>
+        <Route path="/home" render={(props) => {
+          return <LandingPage {...props}/>
+        }}/>
+        <Redirect to="/home" />
+      </Switch>
     </div>
   );
 }
