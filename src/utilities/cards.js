@@ -16,3 +16,13 @@ export function deck(){
 
     return cards;
 }
+
+export function shuffle(deck){
+    return null;
+    // randomly change indexes of cards in deck array
+}
+
+export function draw(deck){
+    return null;
+    // draw a random card from the deck
+}
