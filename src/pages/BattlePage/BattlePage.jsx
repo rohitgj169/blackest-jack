@@ -1,3 +1,4 @@
+import "./BattlePage.css"
 import React, {useState} from 'react';
 import Player from '../../components/Player/Player';
 import Dealer from '../../components/Dealer/Dealer';
@@ -10,7 +11,7 @@ export default function BattlePage() {
 
   const [currentDeck, setCurrentDeck] = useState(newDeck);
   return (
-    <div>
+    <div className="battle-container">
       BattlePage
       <Dealer/>
       <Deck/>
