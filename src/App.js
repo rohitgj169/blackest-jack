@@ -1,15 +1,11 @@
 import './App.css';
 import React, {useState} from 'react';
 import { Redirect, Route, Switch } from "react-router-dom";
-import { deck } from './utilities/cards';
 import BattlePage from './pages/BattlePage/BattlePage';
 import LandingPage from './pages/LandingPage/LandingPage';
 
 function App() {
-  var newDeck = new deck();
-  console.log(newDeck);
 
-  const [currentDeck, setCurrentDeck] = useState(newDeck);
   return (
     <div className="App">
       <Switch>
