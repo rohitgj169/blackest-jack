@@ -15,7 +15,11 @@ export default function BattlePage() {
 
   const drawCard = () => {
     let newCard = cards.draw(currentDeck);
-    setPlayerHand([...playerHand, newCard]);
+    // setPlayerHand([...playerHand, newCard]);
+    setPlayerHand((prevState) => {
+      return [...prevState, newCard];
+    })
+    console.log(playerHand);
   }
 
   const constructDeck = () => {
@@ -31,14 +35,14 @@ export default function BattlePage() {
     console.log(currentDeck);
     let hands = cards.deal(currentDeck);
 
-    // setPlayerHand([...playerHand, ...hands[0]]);
-    setPlayerHand((prevState) => {
-      return [...prevState, ...hands[0]];
-    });
-    // setComputerHand([...computerHand, ...hands[1]]);
-    setComputerHand((prevState) => {
-      return [...prevState,...hands[1]];
-    })
+    setPlayerHand([...hands[0]]);
+    // setPlayerHand((prevState) => {
+    //   return [...prevState, ...hands[0]];
+    // });
+    setComputerHand([...hands[1]]);
+    // setComputerHand((prevState) => {
+    //   return [...prevState,...hands[1]];
+    // })
   }
 
   const help = () => {
