@@ -11,10 +11,11 @@ function App() {
 
   const [deckState, setDeckState] = useState(newDeck);
 
+
   return (
     <div className="App">
       <Dealer/>
-      <Deck/>
+      <Deck deckState={deckState} setDeckState={setDeckState}/>
       <Player/>
     </div>
   );

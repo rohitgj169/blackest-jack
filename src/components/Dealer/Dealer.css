@@ -1,8 +1,20 @@
 .Dealer {
-    border-radius: 10px;
+    border-radius: 1rem;
+    border: .01rem solid #373737;
     background: #373737;
-    padding: 20px;
-    margin: 10px;
-    width: 400px;
-    height: 150px;
+    padding: 1rem 0;
+    margin: 0.5rem;
+    width: 50rem;
+    height: 20rem;
+    color: #FFF;
+}
+
+.card-bar {
+    background: #FFF;
+    height: 10rem;
+    margin-top: 7.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: #000;
 }
