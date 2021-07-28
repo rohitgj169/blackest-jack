@@ -31,8 +31,14 @@ export default function BattlePage() {
     console.log(currentDeck);
     let hands = cards.deal(currentDeck);
 
-    setPlayerHand([...playerHand, ...hands[0]]);
-    setComputerHand([...computerHand, ...hands[1]]);
+    // setPlayerHand([...playerHand, ...hands[0]]);
+    setPlayerHand((prevState) => {
+      return [...prevState, ...hands[0]];
+    });
+    // setComputerHand([...computerHand, ...hands[1]]);
+    setComputerHand((prevState) => {
+      return [...prevState,...hands[1]];
+    })
   }
 
   const help = () => {
