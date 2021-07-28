@@ -23,6 +23,8 @@ export default function BattlePage() {
     let shuffledDeck = cards.shuffle(newDeck);
     console.log(shuffledDeck);
     setCurrentDeck(shuffledDeck);
+    setPlayerHand([]);
+    setComputerHand([]);
   }
 
   const dealCards = () => {
@@ -38,6 +40,10 @@ export default function BattlePage() {
     console.log("Computer Hand =",computerHand);
     console.log("Deck =",currentDeck);
   }
+
+  const check = () => {
+    cards.bustCheck(playerHand);
+  }
   
   useEffect(() => {
     constructDeck();
@@ -50,6 +56,7 @@ export default function BattlePage() {
       <button onClick={constructDeck}>Round</button>
       <button onClick={dealCards}>Deal</button>
       <button onClick={help}>Show Hands</button>
+      <button onClick={check}>Bust Check</button>
       <Dealer/>
       <Deck/>
       <Player/>

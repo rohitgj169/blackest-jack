@@ -6,7 +6,7 @@ function card(value,suit){
 }
 
 function deck(){
-    this.values = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'];
+    this.values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
     this.suits = ['Clubs','Diamonds','Hearts','Spades'];
     let cards = [];
 
@@ -48,10 +48,40 @@ function deal(deck){
 }
 
 function bustCheck(hand){
+    let aces = [];
     let total = 0;
     hand.forEach((card) => {
-      
+        if (card.value == 'A'){
+            total+= 1;
+            aces.push(11);
+        }
+        else if (['K','Q','J'].indexOf(card.value)>=0){
+            total+= 10;
+        }
+        else {
+            total+= card.value*1;
+        }
     })
+    if(total >21){
+        console.log("BUST! Total: ",total);
+        return true;
+    }
+    else if (total == 21){
+        console.log("Win!", total);
+        return false;
+    }
+    else if(total < 12 && aces.length > 0){
+        total+=10;
+        console.log("Soft hand total: ", total)
+        if(total == 21){
+            console.log("Soft Win!", total);
+        }
+        return false;
+    }
+    else{
+        console.log(total);
+        return false;
+    }        
 }
 
 module.exports = {
@@ -59,4 +89,5 @@ module.exports = {
   shuffle:shuffleDeck,
   draw,
   deal,
+  bustCheck,
 }
