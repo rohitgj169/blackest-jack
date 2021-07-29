@@ -17,10 +17,12 @@ export default function BattlePage() {
 
   const drawCard = (turn) => {
     let newCard = cards.draw(currentDeck);
-    if (turn === 1)
+    if (turn === 1) {
       setPlayerHand((prevState) => {
         return [...prevState, newCard];
       });
+      console.log(playerTotal);
+    }
     if (turn === 2)
       setComputerHand((prevState) => {
         return [...prevState, newCard];
