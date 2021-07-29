@@ -1,51 +1,96 @@
 import "./BattlePage.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
 import cards from "../../utilities/cards";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "LOSS":
+      return {
+        gameStatus: 0,
+        playerTotal: action.payload.total,
+      };
+    case "UPDATEPLAYERTOTAL":
+      return { playerTotal: action.payload.total };
+    default:
+      throw new Error("Unexpected action");
+  }
+}
+
+function playerHandReducer(state, action) {
+  switch (action.type) {
+    case "DEALPLAYER":
+      return [...state, ...action.payload.playerHand];
+    case "CONSTRUCT":
+      return [];
+    default:
+      return state;
+  }
+}
+
+function computerHandReducer(state, action) {
+  switch (action.type) {
+    case "DEALCOMPUTER":
+      return [...state, ...action.payload.computerHand];
+    case "CONSTRUCT":
+      return [];
+    default:
+      return state;
+  }
+}
+
 export default function BattlePage() {
   const [currentDeck, setCurrentDeck] = useState([]);
-  const [playerHand, setPlayerHand] = useState([]);
-  const [computerHand, setComputerHand] = useState([]);
+  // const [playerHand, setPlayerHand] = useState([]);
+  // const [computerHand, setComputerHand] = useState([]);
+  const [playerHand, dispatchPlayerHand] = useReducer(playerHandReducer, []);
+  const [computerHand, dispatchComputerHand] = useReducer(
+    computerHandReducer,
+    []
+  );
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [gameStatus, setGameStatus] = useState(1); // Maybe 0 loss, 1 game on, 2 win?
-  const [playerTotal, setPlayerTotal] = useState(0);
-  const [computerTotal, setComputerTotal] = useState(0);
-
+  // const [gameStatus, setGameStatus] = useState(1); // Maybe 0 loss, 1 game on, 2 win?
+  // const [playerTotal, setPlayerTotal] = useState(0);
+  // const [computerTotal, setComputerTotal] = useState(0);
+  const [state, dispatch] = useReducer(reducer, {
+    gameStatus: 1,
+    playerTotal: 10,
+    computerTotal: 0,
+  });
 
   const drawCard = (turn) => {
     let newCard = cards.draw(currentDeck);
     // setPlayerHand([...playerHand, newCard]);
-    if (turn === 1)
-      setPlayerHand((prevState) => {
-        return [...prevState, newCard];
-      });
-    if (turn === 2)
-      setComputerHand((prevState) => {
-        return [...prevState, newCard];
-      });
-    // console.log(playerHand);
+    //   if (turn === 1)
+    //     setPlayerHand((prevState) => {
+    //       return [...prevState, newCard];
+    //     });
+    //  if (turn === 2)
+    //       setComputerHand((prevState) => {
+    //         return [...prevState, newCard];
+    //       });
+    //   console.log(playerHand);
     // Check for bust
     let handTotal;
     if (turn === 1) {
       handTotal = cards.bustCheck(playerHand, currentPlayer);
       console.log("Player Hand: ", handTotal.total);
-      if(handTotal.bust === true){
-        setGameStatus(0);
-        console.log("You loose")
+      if (handTotal.bust === true) {
+        // setGameStatus(0);
+        dispatch({ type: "LOSS", payload: { total: handTotal.total } });
+        console.log("You loose");
       }
-      if(handTotal.total === 21){
-        
+      if (handTotal.total === 21) {
       }
     }
     if (turn === 2) {
       handTotal = cards.bustCheck(computerHand, currentPlayer);
       console.log("Computer Hand: ", handTotal.total);
-      if(handTotal.bust === true){
-        setGameStatus(2);
-        console.log("You Win")
+      if (handTotal.bust === true) {
+        // setGameStatus(2);
+        console.log("You Win");
       }
     }
   };
@@ -55,22 +100,34 @@ export default function BattlePage() {
     let shuffledDeck = cards.shuffle(newDeck);
     // console.log(shuffledDeck);
     setCurrentDeck(shuffledDeck);
-    setPlayerHand([]);
-    setComputerHand([]);
+    // setPlayerHand([]);
+    dispatchPlayerHand({ type: "CONSTRUCT" });
+    dispatchComputerHand({ type: "CONSTRUCT" });
+    // setComputerHand([]);
   };
 
   const dealCards = () => {
     // console.log(currentDeck);
     let hands = cards.deal(currentDeck);
-
-    setPlayerHand([...hands[0]]);
+    console.log(hands);
+    dispatchPlayerHand({
+      type: "DEALPLAYER",
+      payload: { playerHand: hands[0] },
+    });
+    console.log(playerHand);
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    console.log("Player Total",bustResult.total);
-    setPlayerTotal(bustResult.total);
-    setComputerHand([...hands[1]]);
-
+    console.log(bustResult);
+    dispatch({ type: "UPDATEPLAYERTOTAL" ,payload: {total: bustResult.total}});
+    console.log(state.playerTotal);
+    // setPlayerHand([...hands[0]]); // Player hand not updating synchronously
+    console.log("Player Total", bustResult.total);
+    // setPlayerTotal(bustResult.total);
+    dispatchComputerHand({
+      type: "DEALCOMPUTER",
+      payload: { computerHand: hands[1] },
+    });
   };
-  
+
   // const playerTotalRef = useRef(0)
 
   // useEffect(() => {
@@ -96,6 +153,7 @@ export default function BattlePage() {
     constructDeck();
   }, []);
 
+
   return (
     <div className="battle-container">
       BattlePage
@@ -105,9 +163,9 @@ export default function BattlePage() {
       <button onClick={help}>Show Hands</button>
       <button onClick={check}>Bust Check</button>
       <button onClick={stand}>Stand</button>
-      <Dealer dealerDeck={computerHand}/>
+      <Dealer dealerDeck={computerHand} />
       <Deck />
-      <Player playerDeck={playerHand}/>
+      <Player playerDeck={playerHand} playerTotal={state.playerTotal} />
     </div>
   );
 }

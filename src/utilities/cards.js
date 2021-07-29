@@ -66,13 +66,17 @@ function bustCheck(hand, player) {
   hand.forEach((card) => {
     if (card.value === "A") {
       total += 1;
+      console.log("ACE IN HAND");
       aces.push(11);
     } else if (["K", "Q", "J"].indexOf(card.value) >= 0) {
+      console.log("FACE CARD IN HAND");
       total += 10;
     } else {
+      console.log("NUMBER IN HAND");
       total += card.value * 1;
     }
   });
+  console.log(total);
   if (total > 21) {
     console.log("BUST! Total: ", total);
     return {
@@ -99,7 +103,7 @@ function bustCheck(hand, player) {
     if(player === 1) console.log("Player:",total);
     if(player === 2) console.log("Computer:",total);
     return {
-      total, 
+      total:total, 
       bust: false,
     };
   }
