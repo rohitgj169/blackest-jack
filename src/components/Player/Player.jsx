@@ -2,7 +2,7 @@ import React from 'react';
 import './Player.css';
 
 export default function Player({playerDeck, playerTotal}) {
-  console.log(playerDeck);
+  // console.log(playerDeck);
     return (
         <div className="Player">
             Player Box

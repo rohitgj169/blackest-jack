@@ -2,7 +2,7 @@ import React from "react";
 import "./Dealer.css";
 
 export default function Dealer({ dealerDeck }) {
-  console.log(dealerDeck);
+  // console.log(dealerDeck);
   return (
     <div className="Dealer">
       Dealer Box

@@ -1,85 +1,38 @@
 import "./BattlePage.css";
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
 import cards from "../../utilities/cards";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "LOSS":
-      return {
-        gameStatus: 0,
-        playerTotal: action.payload.total,
-      };
-    case "UPDATEPLAYERTOTAL":
-      return { playerTotal: action.payload.total };
-    default:
-      throw new Error("Unexpected action");
-  }
-}
-
-function playerHandReducer(state, action) {
-  switch (action.type) {
-    case "DEALPLAYER":
-      return [...state, ...action.payload.playerHand];
-    case "CONSTRUCT":
-      return [];
-    default:
-      return state;
-  }
-}
-
-function computerHandReducer(state, action) {
-  switch (action.type) {
-    case "DEALCOMPUTER":
-      return [...state, ...action.payload.computerHand];
-    case "CONSTRUCT":
-      return [];
-    default:
-      return state;
-  }
-}
-
 export default function BattlePage() {
   const [currentDeck, setCurrentDeck] = useState([]);
-  // const [playerHand, setPlayerHand] = useState([]);
-  // const [computerHand, setComputerHand] = useState([]);
-  const [playerHand, dispatchPlayerHand] = useReducer(playerHandReducer, []);
-  const [computerHand, dispatchComputerHand] = useReducer(
-    computerHandReducer,
-    []
-  );
+  const [playerHand, setPlayerHand] = useState([]);
+  const [computerHand, setComputerHand] = useState([]);
+
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  // const [gameStatus, setGameStatus] = useState(1); // Maybe 0 loss, 1 game on, 2 win?
-  // const [playerTotal, setPlayerTotal] = useState(0);
-  // const [computerTotal, setComputerTotal] = useState(0);
-  const [state, dispatch] = useReducer(reducer, {
-    gameStatus: 1,
-    playerTotal: 10,
-    computerTotal: 0,
-  });
+  const [gameStatus, setGameStatus] = useState(1); // Maybe 0 loss, 1 game on, 2 win?
+  const [playerTotal, setPlayerTotal] = useState(0);
+  const [computerTotal, setComputerTotal] = useState(0);
 
   const drawCard = (turn) => {
     let newCard = cards.draw(currentDeck);
-    // setPlayerHand([...playerHand, newCard]);
-    //   if (turn === 1)
-    //     setPlayerHand((prevState) => {
-    //       return [...prevState, newCard];
-    //     });
-    //  if (turn === 2)
-    //       setComputerHand((prevState) => {
-    //         return [...prevState, newCard];
-    //       });
-    //   console.log(playerHand);
+    if (turn === 1)
+      setPlayerHand((prevState) => {
+        return [...prevState, newCard];
+      });
+    if (turn === 2)
+      setComputerHand((prevState) => {
+        return [...prevState, newCard];
+      });
+    console.log(playerHand);
     // Check for bust
     let handTotal;
     if (turn === 1) {
       handTotal = cards.bustCheck(playerHand, currentPlayer);
       console.log("Player Hand: ", handTotal.total);
       if (handTotal.bust === true) {
-        // setGameStatus(0);
-        dispatch({ type: "LOSS", payload: { total: handTotal.total } });
+        setGameStatus(0);
         console.log("You loose");
       }
       if (handTotal.total === 21) {
@@ -89,7 +42,7 @@ export default function BattlePage() {
       handTotal = cards.bustCheck(computerHand, currentPlayer);
       console.log("Computer Hand: ", handTotal.total);
       if (handTotal.bust === true) {
-        // setGameStatus(2);
+        setGameStatus(2);
         console.log("You Win");
       }
     }
@@ -100,44 +53,24 @@ export default function BattlePage() {
     let shuffledDeck = cards.shuffle(newDeck);
     // console.log(shuffledDeck);
     setCurrentDeck(shuffledDeck);
-    // setPlayerHand([]);
-    dispatchPlayerHand({ type: "CONSTRUCT" });
-    dispatchComputerHand({ type: "CONSTRUCT" });
-    // setComputerHand([]);
+    setPlayerHand([]);
+    setComputerHand([]);
   };
 
   const dealCards = () => {
     // console.log(currentDeck);
     let hands = cards.deal(currentDeck);
     console.log(hands);
-    dispatchPlayerHand({
-      type: "DEALPLAYER",
-      payload: { playerHand: hands[0] },
-    });
+    setPlayerHand([...hands[0]]); // Player hand not updating synchronously
     console.log(playerHand);
-    let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    console.log(bustResult);
-    dispatch({ type: "UPDATEPLAYERTOTAL" ,payload: {total: bustResult.total}});
-    console.log(state.playerTotal);
-    // setPlayerHand([...hands[0]]); // Player hand not updating synchronously
-    console.log("Player Total", bustResult.total);
-    // setPlayerTotal(bustResult.total);
-    dispatchComputerHand({
-      type: "DEALCOMPUTER",
-      payload: { computerHand: hands[1] },
-    });
+    setComputerHand([...hands[1]]);
   };
-
-  // const playerTotalRef = useRef(0)
-
-  // useEffect(() => {
-  //   playerTotalRef.current = cards.bustCheck(playerHand, currentPlayer);
-  // },[playerTotal])
 
   const help = () => {
     console.log("Player Hand =", playerHand);
     console.log("Computer Hand =", computerHand);
-    console.log("Deck =", currentDeck);
+    console.log("Player Total =", playerTotal);
+    console.log("Computer Total =", computerTotal);
   };
 
   const check = () => {
@@ -153,6 +86,18 @@ export default function BattlePage() {
     constructDeck();
   }, []);
 
+  useEffect(() => {
+    let bustResult = cards.bustCheck(playerHand, currentPlayer);
+    console.log(bustResult);
+    console.log("Player Total", bustResult.total);
+    setPlayerTotal(bustResult.total);
+  }, [playerHand])
+
+  useEffect(() => {
+    let bustResult = cards.bustCheck(computerHand, currentPlayer);
+    console.log("Computer Total", bustResult.total);
+    setComputerTotal(bustResult.total);
+  },[computerHand])
 
   return (
     <div className="battle-container">
@@ -165,7 +110,7 @@ export default function BattlePage() {
       <button onClick={stand}>Stand</button>
       <Dealer dealerDeck={computerHand} />
       <Deck />
-      <Player playerDeck={playerHand} playerTotal={state.playerTotal} />
+      <Player playerDeck={playerHand} playerTotal={playerTotal} />
     </div>
   );
 }
