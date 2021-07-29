@@ -15,6 +15,15 @@ export default function BattlePage() {
   const [playerTotal, setPlayerTotal] = useState(0);
   const [computerTotal, setComputerTotal] = useState(0);
 
+  useEffect = (() => {
+    let bustResult = cards.bustCheck(playerHand, currentPlayer);
+    if (!bustResult.bust){
+      
+
+    }
+  },[playerTotal])
+
+  
   const drawCard = (turn) => {
     let newCard = cards.draw(currentDeck);
     if (turn === 1) {
