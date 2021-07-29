@@ -11,17 +11,51 @@ export default function BattlePage() {
   const [computerHand, setComputerHand] = useState([]);
 
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [gameStatus, setGameStatus] = useState(1); // Maybe 0 loss, 1 game on, 2 win?
+  const [gameStatus, setGameStatus] = useState(1); //0 loss, 1 game on, 2 win, draw
   const [playerTotal, setPlayerTotal] = useState(0);
   const [computerTotal, setComputerTotal] = useState(0);
 
-  useEffect = (() => {
+  useEffect(() => {
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    if (!bustResult.bust){
-      
-
+    if (bustResult.bust) {
+      setGameStatus(0);
+      console.log("Over 21");
     }
+    if (!bustResult.bust) console.log("Under 21");
   },[playerTotal])
+
+  useEffect(() => {
+    let bustResult = cards.bustCheck(computerHand, currentPlayer);
+    if (bustResult.total > 21) {
+      setGameStatus(2);
+      console.log("Over 21");
+    }
+    if (bustResult.total < 17){
+      console.log("Dealer should draw");
+    }
+    if(bustResult.total <= 17 && bustResult.total >=21) {
+      console.log("Dealer Stands");
+      if(computerTotal === playerTotal) {
+        setGameStatus(3);
+        console.log("Draw")
+      }
+      if(computerTotal > playerTotal) {
+        setGameStatus(0);
+        console.log("Loss");
+      }
+      if(computerTotal < playerTotal) {
+        setGameStatus(1);
+        console.log("Win");
+    };
+    }
+
+    if(bustResult.total === 21 && playerTotal===21) {
+      setGameStatus(3);
+      console.log("Draw")
+    }
+    
+    if (!bustResult.bust) console.log("Under 21");
+  },[computerTotal])
 
   
   const drawCard = (turn) => {
@@ -90,8 +124,14 @@ export default function BattlePage() {
   };
 
   const stand = () => {
-    setCurrentPlayer(2);
-    cards.bustCheck(computerHand, currentPlayer);
+    if (currentPlayer === 1){
+      setCurrentPlayer(2);
+      cards.bustCheck(computerHand, currentPlayer);
+    }
+    else {
+      
+    }
+    
   };
   useEffect(() => {
     constructDeck();
