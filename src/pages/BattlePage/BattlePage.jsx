@@ -124,6 +124,7 @@ export default function BattlePage() {
   };
 
   const help = () => {
+    console.log("Deck = ", currentDeck);
     console.log("Player Hand =", playerHand);
     console.log("Computer Hand =", computerHand);
     console.log("Player Total =", playerTotal);
@@ -173,12 +174,15 @@ export default function BattlePage() {
     }
   }, [roundProgress]);
 
-  useEffect(() => {
+  useEffect(() => { // This Use Effect draws a card for the dealer if necessary
     if (currentPlayer===1) return;
     if (currentPlayer === 2) {
       let bustResult = cards.bustCheck(computerHand, currentPlayer);
       if (bustResult.total < 17) {
-        drawCard(2);
+        drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
+        console.log("Computer Hand", computerTotal);
+        console.log("Player Hand", playerTotal);
+        return;
       }
       if (bustResult.total >= 17 && bustResult.total <=21) {
         if (computerTotal === playerTotal) {
@@ -193,7 +197,7 @@ export default function BattlePage() {
         }
         if (computerTotal < playerTotal) {
           console.log("Player Win");
-          setGameStatus(1);
+          setGameStatus(2);
           setRoundProgress(false);
         }
       }
@@ -205,9 +209,16 @@ export default function BattlePage() {
     }
   }, [currentPlayer, computerHand]);
 
+  useEffect(() =>{
+    // I want this useEffect to determine game status based on computerHand
+  })
+
+
   return (
     <div className="battle-container">
       {gameOutcome}
+      {gameStatus}
+      {currentPlayer === 1 ? "Player Turn" : "Dealer Turn"}
       <button onClick={() => drawCard(currentPlayer)}>Draw</button>
       <button onClick={constructDeck}>Round</button>
       <button onClick={dealCards}>Deal</button>
