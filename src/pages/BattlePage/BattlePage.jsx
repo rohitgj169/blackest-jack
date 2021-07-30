@@ -21,7 +21,7 @@ export default function BattlePage() {
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
     if (bustResult.bust) {
       setGameStatus(0);
-      console.log("Over 21");
+      // console.log("Over 21");
       setRoundProgress(false);
     }
     if (!bustResult.bust) console.log("Under 21");
@@ -31,30 +31,30 @@ export default function BattlePage() {
     let bustResult = cards.bustCheck(computerHand, currentPlayer);
     if (bustResult.total > 21) {
       setGameStatus(2);
-      console.log("Over 21");
+      // console.log("Over 21");
       setRoundProgress(false);
     }
     if (bustResult.total < 17) {
-      console.log("Dealer should draw");
+      // console.log("Dealer should draw");
     }
-    if (bustResult.total <= 17 && bustResult.total >= 21) {
-      console.log("Dealer Stands");
-      if (computerTotal === playerTotal) {
-        console.log("Draw");
-        setGameStatus(3);
-        setRoundProgress(false);
-      }
-      if (computerTotal > playerTotal) {
-        console.log("Loss");
-        setGameStatus(0);
-        setRoundProgress(false);
-      }
-      if (computerTotal < playerTotal) {
-        console.log("Win");
-        setGameStatus(1);
-        setRoundProgress(false);
-      }
-    }
+    // if (bustResult.total <= 17 && bustResult.total >= 21) {
+    //   console.log("Dealer Stands");
+    //   if (computerTotal === playerTotal) {
+    //     // console.log("Draw");
+    //     setGameStatus(3);
+    //     setRoundProgress(false);
+    //   }
+    //   if (computerTotal > playerTotal) {
+    //     // console.log("Dealer Win");
+    //     setGameStatus(0);
+    //     setRoundProgress(false);
+    //   }
+    //   if (computerTotal < playerTotal) {
+    //     // console.log("Player Win");
+    //     setGameStatus(1);
+    //     setRoundProgress(false);
+    //   }
+    // }
 
     if (bustResult.total === 21 && playerTotal === 21) {
       console.log("Draw");
@@ -64,7 +64,6 @@ export default function BattlePage() {
 
     if (!bustResult.bust) {
       console.log("Under 21");
-      // drawCard(2);
     }
   }, [computerTotal]);
 
@@ -110,6 +109,9 @@ export default function BattlePage() {
     setPlayerHand([]);
     setComputerHand([]);
     setRoundProgress(true);
+    setGameStatus(1);
+    setCurrentPlayer(1);
+    setGameOutcome("");
   };
 
   const dealCards = () => {
@@ -171,10 +173,37 @@ export default function BattlePage() {
     }
   }, [roundProgress]);
 
-  // useEffect(() => {
-  //   if (currentPlayer===1) return;
-  //   if (currentPlayer === 2) drawCard(2);
-  // }, [currentPlayer, drawCard]);
+  useEffect(() => {
+    if (currentPlayer===1) return;
+    if (currentPlayer === 2) {
+      let bustResult = cards.bustCheck(computerHand, currentPlayer);
+      if (bustResult.total < 17) {
+        drawCard(2);
+      }
+      if (bustResult.total >= 17 && bustResult.total <=21) {
+        if (computerTotal === playerTotal) {
+          console.log("Draw");
+          setGameStatus(3);
+          setRoundProgress(false);
+        }
+        if (computerTotal > playerTotal) {
+          console.log("Dealer Win");
+          setGameStatus(0);
+          setRoundProgress(false);
+        }
+        if (computerTotal < playerTotal) {
+          console.log("Player Win");
+          setGameStatus(1);
+          setRoundProgress(false);
+        }
+      }
+      if (bustResult.total === 21 && playerTotal === 21) {
+        console.log("Draw");
+        setGameStatus(3);
+        setRoundProgress(false);
+      }
+    }
+  }, [currentPlayer, computerHand]);
 
   return (
     <div className="battle-container">
