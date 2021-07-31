@@ -17,6 +17,8 @@ export default function BattlePage() {
   const [computerTotal, setComputerTotal] = useState(0);
   const [roundProgress, setRoundProgress] = useState(false);
 
+  const [cardDrawn, setCardDrawn] = useState(false);
+
   useEffect(() => {
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
     if (bustResult.bust) {
@@ -68,7 +70,10 @@ export default function BattlePage() {
   }, [computerTotal]);
 
   const drawCard = (turn) => {
-    let newCard = cards.draw(currentDeck);
+    // let newCard = cards.draw(currentDeck);
+    let newCard = currentDeck[-1];
+    console.log(currentDeck);
+    setCurrentDeck(currentDeck.splice(-1,1));
     if (turn === 1) {
       setPlayerHand((prevState) => {
         return [...prevState, newCard];
@@ -104,7 +109,7 @@ export default function BattlePage() {
     if (roundProgress) return;
     let newDeck = cards.deck();
     let shuffledDeck = cards.shuffle(newDeck);
-    // console.log(shuffledDeck);
+    console.log(shuffledDeck);
     setCurrentDeck(shuffledDeck);
     setPlayerHand([]);
     setComputerHand([]);
@@ -115,12 +120,11 @@ export default function BattlePage() {
   };
 
   const dealCards = () => {
-    // console.log(currentDeck);
-    let hands = cards.deal(currentDeck);
-    // console.log(hands);
-    setPlayerHand([...hands[0]]); // Player hand not updating synchronously
-    // console.log(playerHand);
-    setComputerHand([...hands[1]]);
+    drawCard(1);
+    drawCard(2);
+    drawCard(1);
+    drawCard(2);
+
   };
 
   const help = () => {
@@ -178,12 +182,7 @@ export default function BattlePage() {
     if (currentPlayer===1) return;
     if (currentPlayer === 2) {
       let bustResult = cards.bustCheck(computerHand, currentPlayer);
-      if (bustResult.total < 17) {
-        drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
-        console.log("Computer Hand", computerTotal);
-        console.log("Player Hand", playerTotal);
-        return;
-      }
+      
       if (bustResult.total >= 17 && bustResult.total <=21) {
         if (computerTotal === playerTotal) {
           console.log("Draw");
@@ -206,12 +205,47 @@ export default function BattlePage() {
         setGameStatus(3);
         setRoundProgress(false);
       }
+      if (bustResult.total < 17) {
+        drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
+        setCardDrawn(true);
+        console.log("Computer Hand", computerTotal);
+        console.log("Player Hand", playerTotal);
+        return;
+      }
+      
     }
-  }, [currentPlayer, computerHand]);
+  }, [currentDeck]);
 
   useEffect(() =>{
     // I want this useEffect to determine game status based on computerHand
-  })
+    if (currentPlayer === 2) {
+      let bustResult = cards.bustCheck(computerHand, currentPlayer);
+
+      if (bustResult.total >= 17 && bustResult.total <=21) {
+        if (computerTotal === playerTotal) {
+          console.log("Draw");
+          setGameStatus(3);
+          setRoundProgress(false);
+        }
+        if (computerTotal > playerTotal) {
+          console.log("Dealer Win");
+          setGameStatus(0);
+          setRoundProgress(false);
+        }
+        if (computerTotal < playerTotal) {
+          console.log("Player Win");
+          setGameStatus(2);
+          setRoundProgress(false);
+        }
+      }
+      if (bustResult.total === 21 && playerTotal === 21) {
+        console.log("Draw");
+        setGameStatus(3);
+        setRoundProgress(false);
+      }
+      
+    }
+  },[computerTotal])
 
 
   return (
