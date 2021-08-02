@@ -176,7 +176,7 @@ export default function BattlePage() {
       <button onClick={check}>Bust Check</button>
       <button onClick={stand}>Stand</button>
       <Dealer dealerDeck={computerHand} />
-      <Deck />
+      <Deck deck ={currentDeck}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} />
     </div>
   );

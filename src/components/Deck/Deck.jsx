@@ -2,10 +2,14 @@ import React from "react";
 
 import "./Deck.css";
 
-export default function Deck({ deckState, setDeckState }) {
+export default function Deck({ deck }) {
   return (
     <div className="Deck">
-      {/* <p>{deckState[51].value} of {deckState[51].suit}</p> */}
+      {deck.length
+        ? <h1>{deck[deck.length-1].value}</h1>
+      :
+      null}
+      
     </div>
   );
 }
