@@ -35,30 +35,29 @@ function deck() {
 
 function shuffleDeck(deck) {
   let shuffledDeck = shuffle(deck);
-  // console.log(shuffledDeck);
   return shuffledDeck;
   // randomly change indexes of cards in deck array
 }
 
-// function draw(deck) {
-//   // draw a random card from the deck
-//   // returns card object
-//   let card = deck.pop();
-//   console.log(card);
-//   return card;
-// }
+function draw(deck) {
+  // draw a random card from the deck
+  // returns card object
+  let card = deck.pop();
+  console.log(card);
+  return card;
+}
 
-// function deal(deck) {
-//   let playerDeal = [];
-//   let computerDeal = [];
+function deal(deck) {
+  let playerDeal = [];
+  let computerDeal = [];
 
-//   playerDeal.push(draw(deck));
-//   computerDeal.push(draw(deck));
-//   playerDeal.push(draw(deck));
-//   computerDeal.push(draw(deck));
+  playerDeal.push(draw(deck));
+  computerDeal.push(draw(deck));
+  playerDeal.push(draw(deck));
+  computerDeal.push(draw(deck));
 
-//   return [playerDeal, computerDeal];
-// }
+  return [playerDeal, computerDeal];
+}
 
 function bustCheck(hand, player) {
   let aces = [];
@@ -73,7 +72,6 @@ function bustCheck(hand, player) {
       total += card.value * 1;
     }
   });
-  // console.log(total);
   if (total > 21) {
     console.log("BUST! Total: ", total);
     return {
@@ -103,7 +101,7 @@ function bustCheck(hand, player) {
 module.exports = {
   deck,
   shuffle: shuffleDeck,
-  // draw,
-  // deal,
+  draw,
+  deal,
   bustCheck,
 };

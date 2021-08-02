@@ -11,9 +11,9 @@ export default function Dealer({ dealerDeck }) {
         <div>Card Slots</div>
         <ul>
           {dealerDeck.length
-            ? dealerDeck.map((card) => {
+            ? dealerDeck.map((card, index) => {
                 return (
-                  <li key={Math.random()}>{`${card.value} of ${card.suit}`}</li>
+                  <li key={index}>{`${card.value} of ${card.suit}`}</li>
                 );
               })
             : null}

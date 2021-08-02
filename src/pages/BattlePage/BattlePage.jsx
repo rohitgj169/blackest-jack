@@ -19,77 +19,23 @@ export default function BattlePage() {
 
   const [cardDrawn, setCardDrawn] = useState(false);
 
-  useEffect(() => {
-    let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    if (bustResult.bust) {
-      setGameStatus(0);
-      // console.log("Over 21");
-      setRoundProgress(false);
-    }
-    if (!bustResult.bust) console.log("Under 21");
-  }, [playerTotal]);
-
-  useEffect(() => {
-    let bustResult = cards.bustCheck(computerHand, currentPlayer);
-    if (bustResult.total > 21) {
-      setGameStatus(2);
-      // console.log("Over 21");
-      setRoundProgress(false);
-    }
-    if (bustResult.total < 17) {
-      // console.log("Dealer should draw");
-    }
-    // if (bustResult.total <= 17 && bustResult.total >= 21) {
-    //   console.log("Dealer Stands");
-    //   if (computerTotal === playerTotal) {
-    //     // console.log("Draw");
-    //     setGameStatus(3);
-    //     setRoundProgress(false);
-    //   }
-    //   if (computerTotal > playerTotal) {
-    //     // console.log("Dealer Win");
-    //     setGameStatus(0);
-    //     setRoundProgress(false);
-    //   }
-    //   if (computerTotal < playerTotal) {
-    //     // console.log("Player Win");
-    //     setGameStatus(1);
-    //     setRoundProgress(false);
-    //   }
-    // }
-
-    if (bustResult.total === 21 && playerTotal === 21) {
-      console.log("Draw");
-      setGameStatus(3);
-      setRoundProgress(false);
-    }
-
-    if (!bustResult.bust) {
-      console.log("Under 21");
-    }
-  }, [computerTotal]);
-
   const drawCard = (turn) => {
-    // let newCard = cards.draw(currentDeck);
-    let newCard = currentDeck[-1];
-    console.log(currentDeck);
-    setCurrentDeck(currentDeck.splice(-1,1));
+    let newCard = cards.draw(currentDeck);
+
     if (turn === 1) {
       setPlayerHand((prevState) => {
         return [...prevState, newCard];
       });
-      // console.log(playerTotal);
     }
-    if (turn === 2)
-      setComputerHand((prevState) => {
+    if (turn === 2){
+       setComputerHand((prevState) => {
         return [...prevState, newCard];
       });
-    console.log(playerHand);
+    }
     // Check for bust
     let handTotal;
     if (turn === 1) {
       handTotal = cards.bustCheck(playerHand, currentPlayer);
-      // console.log("Player Hand: ", handTotal.total);
       if (handTotal.bust === true) {
         setGameStatus(0);
       }
@@ -98,7 +44,6 @@ export default function BattlePage() {
     }
     if (turn === 2) {
       handTotal = cards.bustCheck(computerHand, currentPlayer);
-      // console.log("Computer Hand: ", handTotal.total);
       if (handTotal.bust === true) {
         setGameStatus(2);
       }
@@ -109,21 +54,19 @@ export default function BattlePage() {
     if (roundProgress) return;
     let newDeck = cards.deck();
     let shuffledDeck = cards.shuffle(newDeck);
-    console.log(shuffledDeck);
     setCurrentDeck(shuffledDeck);
     setPlayerHand([]);
     setComputerHand([]);
     setRoundProgress(true);
     setGameStatus(1);
     setCurrentPlayer(1);
-    setGameOutcome("");
+    setGameOutcome("In Progress");
   };
 
   const dealCards = () => {
-    drawCard(1);
-    drawCard(2);
-    drawCard(1);
-    drawCard(2);
+    let hands = cards.deal(currentDeck);
+    setPlayerHand(hands[0]);
+    setComputerHand(hands[1]);
 
   };
 
@@ -146,24 +89,23 @@ export default function BattlePage() {
       // cards.bustCheck(computerHand, currentPlayer);
     }
   };
-  useEffect(() => {
+
+  useEffect(() => { // Creates the deck and shuffles
     constructDeck();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // This Use Effect sets the Current Player's Total
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    // console.log(bustResult);
-    // console.log("Player Total", bustResult.total);
-    setPlayerTotal(bustResult.total);
+    if(currentPlayer===1) setPlayerTotal(bustResult.total);
   }, [playerHand]);
 
-  useEffect(() => {
-    let bustResult = cards.bustCheck(computerHand, currentPlayer);
-    // console.log("Computer Total", bustResult.total);
-    setComputerTotal(bustResult.total);
+  useEffect(() => { // This Use Effect sets the Current Player's Total
+    let bustResult = cards.bustCheck(playerHand, currentPlayer);
+    if(currentPlayer === 2)setComputerTotal(bustResult.total);
   }, [computerHand]);
 
-  useEffect(() => {
+
+  useEffect(() => { // This Use Effect sets the Game Outcome message
     if (gameStatus === 0) {
       setGameOutcome("Dealer Wins");
     }
@@ -176,77 +118,51 @@ export default function BattlePage() {
     if (gameStatus ===1 ) {
       setGameOutcome("In Progress")
     }
-  }, [roundProgress]);
+  }, [roundProgress, gameStatus]);
+
+  useEffect(() => { // sets Game status to lost once player busts
+    let bustResult = cards.bustCheck(playerHand, currentPlayer);
+    if (bustResult.bust) {
+      setGameStatus(0);
+      setRoundProgress(false);
+    }
+  }, [playerTotal]);
 
   useEffect(() => { // This Use Effect draws a card for the dealer if necessary
     if (currentPlayer===1) return;
-    if (currentPlayer === 2) {
+    if (currentPlayer===2) {
       let bustResult = cards.bustCheck(computerHand, currentPlayer);
+      if (computerTotal !== bustResult.total){
+        setComputerTotal(bustResult.total);
+      }
+      if (bustResult.total > 21) {
+        setGameStatus(2);
+        setRoundProgress(false);
+      }
       
       if (bustResult.total >= 17 && bustResult.total <=21) {
         if (computerTotal === playerTotal) {
-          console.log("Draw");
           setGameStatus(3);
           setRoundProgress(false);
         }
         if (computerTotal > playerTotal) {
-          console.log("Dealer Win");
           setGameStatus(0);
           setRoundProgress(false);
         }
         if (computerTotal < playerTotal) {
-          console.log("Player Win");
           setGameStatus(2);
           setRoundProgress(false);
         }
       }
-      if (bustResult.total === 21 && playerTotal === 21) {
-        console.log("Draw");
-        setGameStatus(3);
-        setRoundProgress(false);
-      }
+
       if (bustResult.total < 17) {
         drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
         setCardDrawn(true);
-        console.log("Computer Hand", computerTotal);
-        console.log("Player Hand", playerTotal);
         return;
       }
       
     }
-  }, [currentDeck]);
-
-  useEffect(() =>{
-    // I want this useEffect to determine game status based on computerHand
-    if (currentPlayer === 2) {
-      let bustResult = cards.bustCheck(computerHand, currentPlayer);
-
-      if (bustResult.total >= 17 && bustResult.total <=21) {
-        if (computerTotal === playerTotal) {
-          console.log("Draw");
-          setGameStatus(3);
-          setRoundProgress(false);
-        }
-        if (computerTotal > playerTotal) {
-          console.log("Dealer Win");
-          setGameStatus(0);
-          setRoundProgress(false);
-        }
-        if (computerTotal < playerTotal) {
-          console.log("Player Win");
-          setGameStatus(2);
-          setRoundProgress(false);
-        }
-      }
-      if (bustResult.total === 21 && playerTotal === 21) {
-        console.log("Draw");
-        setGameStatus(3);
-        setRoundProgress(false);
-      }
-      
-    }
-  },[computerTotal])
-
+  }, [currentDeck,currentPlayer, computerHand, computerTotal]);
 
   return (
     <div className="battle-container">
