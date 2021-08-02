@@ -21,7 +21,7 @@ function deck() {
     "K",
     "A",
   ];
-  this.suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
+  this.suits = ["♣", "♦", "♥", "♠"];
   let cards = [];
 
   for (let s = 0; s < this.suits.length; s++) {

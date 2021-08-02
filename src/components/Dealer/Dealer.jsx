@@ -1,19 +1,20 @@
 import React from "react";
 import "./Dealer.css";
+import CardContainer from "../CardContainer/CardContainer";
 
 export default function Dealer({ dealerDeck }) {
   // console.log(dealerDeck);
   return (
     <div className="Dealer">
-      Dealer Box
       <div className="card-bar">
         {/* Card Components, Balance*/}
-        <div>Card Slots</div>
-        <ul>
+        <ul className="dealer-card-slots">
           {dealerDeck.length
             ? dealerDeck.map((card, index) => {
                 return (
-                  <li key={index}>{`${card.value} of ${card.suit}`}</li>
+                  <li key={index}>
+                      <CardContainer card = {card} />
+                  </li>
                 );
               })
             : null}
