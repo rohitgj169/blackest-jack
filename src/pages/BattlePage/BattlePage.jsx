@@ -60,7 +60,6 @@ export default function BattlePage() {
     setRoundProgress(true);
     setGameStatus(1);
     setCurrentPlayer(1);
-    setGameOutcome("In Progress");
   };
 
   const dealCards = () => {

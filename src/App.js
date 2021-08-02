@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React from 'react';
 import { Redirect, Route, Switch } from "react-router-dom";
 import BattlePage from './pages/BattlePage/BattlePage';
 import LandingPage from './pages/LandingPage/LandingPage';

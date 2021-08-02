@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from '../Card/Card';
 import './Player.css';
 
 export default function Player({playerDeck, playerTotal}) {
@@ -8,13 +9,13 @@ export default function Player({playerDeck, playerTotal}) {
             Player Box
             <div className="card-bar">
                 {/* Card Components (max 5 slots), Bet Amount, Balance*/}
-                <div>Card Slots</div>
-                <ul>
+                <ul className="card-container">
                   {playerDeck.length?
                     playerDeck.map((card) => {
                       return (
                         <li key={Math.random()}>
-                          {`${card.value} of ${card.suit}`}
+                          <Card cardValue={card.value} cardSuit={card.suit}/>
+                          {/* {`${card.value} of ${card.suit}`} */}
                         </li>
                       )
                     })
