@@ -92,6 +92,7 @@ export default function BattlePage() {
 
   useEffect(() => { // Creates the deck and shuffles
     constructDeck();
+    // dealCards();
   }, []);
 
   useEffect(() => { // This Use Effect sets the Current Player's Total
@@ -169,14 +170,14 @@ export default function BattlePage() {
       {gameOutcome}
       {gameStatus}
       {currentPlayer === 1 ? "Player Turn" : "Dealer Turn"}
-      <button onClick={() => drawCard(currentPlayer)}>Draw</button>
-      <button onClick={constructDeck}>Round</button>
+      {/* <button onClick={() => drawCard(currentPlayer)}>Draw</button> */}
+      {/* <button onClick={constructDeck}>Round</button> */}
       <button onClick={dealCards}>Deal</button>
-      <button onClick={help}>Show Hands</button>
-      <button onClick={check}>Bust Check</button>
-      <button onClick={stand}>Stand</button>
+      {/* <button onClick={help}>Show Hands</button> */}
+      {/* <button onClick={check}>Bust Check</button> */}
+      {/* <button onClick={stand}>Stand</button> */}
       <Dealer dealerDeck={computerHand} />
-      <Deck deck ={currentDeck}/>
+      <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} />
     </div>
   );

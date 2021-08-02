@@ -5,4 +5,12 @@
     padding: 1rem 0;
     margin: 1rem;
     height: 30vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.deck-icon, .stand-icon, .round-icon{
+    font-size: 14rem;
+    align-self: center;
 }
