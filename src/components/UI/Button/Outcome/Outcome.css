@@ -14,3 +14,10 @@
     filter: blur(0);
     transform: scale(1);
   }
+
+  .next-round{
+    font-size: 2rem;
+    color: cyan;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
