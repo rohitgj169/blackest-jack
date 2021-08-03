@@ -1,9 +1,8 @@
 import React from "react";
-import Card from "../Card/Card";
 import "./Dealer.css";
 import CardContainer from "../CardContainer/CardContainer";
 
-export default function Dealer({ dealerDeck, computerBalance }) {
+export default function Dealer({ dealerDeck, computerBalance, currentPlayer }) {
   // console.log(dealerDeck);
   return (
     <div className="Dealer">
@@ -13,8 +12,8 @@ export default function Dealer({ dealerDeck, computerBalance }) {
           {dealerDeck.length
             ? dealerDeck.map((card, index) => {
                 return (
-                  <li key={index}>
-                      <CardContainer card = {card} />
+                  <li key={index} className={currentPlayer===1?`dealer-card-${index}`:" "}> 
+                      <CardContainer card = {card}/>
                   </li>
                 );
               })

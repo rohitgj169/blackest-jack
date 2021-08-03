@@ -188,7 +188,7 @@ export default function BattlePage() {
   return (
     <div className="battle-container">
       <Link className="home-link" to="/home">Home</Link>
-      <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
+      <Dealer dealerDeck={computerHand} computerBalance={computerBalance} currentPlayer={currentPlayer}/>
       <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
       <Outcome className = "game-outcome" gameStatus = {gameStatus} outcome={ gameOutcome}/>

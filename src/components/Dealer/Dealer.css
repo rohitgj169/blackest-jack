@@ -24,10 +24,6 @@
   list-style-type: none;
 }
 
-.dealer-card-slots li:nth-child(2){
-  opacity: 0.1;
-}
-
-.hidden-card{
+.dealer-card-1{
   opacity: 0;
 }

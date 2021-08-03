@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from '../Card/Card';
 import './Player.css';
 import CardContainer from '../CardContainer/CardContainer';
 
