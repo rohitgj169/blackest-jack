@@ -13,6 +13,7 @@
 .deck-icon, .stand-icon, .round-icon, .bet-icon{
     font-size: 14rem;
     align-self: center;
+    cursor: pointer;
 }
 
 .deck-text, .stand-text, .round-text, .bet-text{
