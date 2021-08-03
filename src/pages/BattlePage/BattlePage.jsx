@@ -1,6 +1,6 @@
 import "./BattlePage.css";
 import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
@@ -18,16 +18,19 @@ export default function BattlePage() {
   const [playerTotal, setPlayerTotal] = useState(0);
   const [computerTotal, setComputerTotal] = useState(0);
   const [roundProgress, setRoundProgress] = useState(false);
+  const [betAllow, setBetAllow] = useState(true);
 
-  const[betAmount, setBetAmount] = useState(10);
-  const[playerBalance, setPlayerBalance] = useState(1000);
-  const[computerBalance, setComputerBalance] = useState(1000);
+  const [betAmount, setBetAmount] = useState(10);
+  const [playerBalance, setPlayerBalance] = useState(1000);
+  const [computerBalance, setComputerBalance] = useState(1000);
 
   const drawCard = (turn) => {
-    if(currentDeck.length === 52){
+    setBetAllow(false);
+    if (currentDeck.length === 52) {
       dealCards();
       return;
     }
+
     let newCard = cards.draw(currentDeck);
 
     if (turn === 1) {
@@ -35,8 +38,8 @@ export default function BattlePage() {
         return [...prevState, newCard];
       });
     }
-    if (turn === 2){
-       setComputerHand((prevState) => {
+    if (turn === 2) {
+      setComputerHand((prevState) => {
         return [...prevState, newCard];
       });
     }
@@ -68,13 +71,15 @@ export default function BattlePage() {
     setRoundProgress(true);
     setGameStatus(1);
     setCurrentPlayer(1);
+    setBetAllow(true);
+    setBetAmount(10);
   };
 
   const dealCards = () => {
     let hands = cards.deal(currentDeck);
     setPlayerHand(hands[0]);
     setComputerHand(hands[1]);
-
+    setBetAllow(false);
   };
 
   const help = () => {
@@ -97,52 +102,54 @@ export default function BattlePage() {
     }
   };
 
-  const increaseBet = () =>{
+  const increaseBet = () => {
     setBetAmount((prevState) => {
-      return prevState+10;
+      return prevState + 10;
     });
   };
 
-  const showOutcome = () => {
+  const showOutcome = () => {};
 
-  }
-
-  useEffect(() => { // Creates the deck and shuffles
+  useEffect(() => {
+    // Creates the deck and shuffles
     constructDeck();
     // dealCards();
   }, []);
 
-  useEffect(() => { // This Use Effect sets the Current Player's Total
+  useEffect(() => {
+    // This Use Effect sets the Current Player's Total
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    if(currentPlayer===1) setPlayerTotal(bustResult.total);
+    if (currentPlayer === 1) setPlayerTotal(bustResult.total);
   }, [playerHand]);
 
-  useEffect(() => { // This Use Effect sets the Current Player's Total
+  useEffect(() => {
+    // This Use Effect sets the Current Player's Total
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
-    if(currentPlayer === 2)setComputerTotal(bustResult.total);
+    if (currentPlayer === 2) setComputerTotal(bustResult.total);
   }, [computerHand]);
 
-
-  useEffect(() => { // This Use Effect sets the Game Outcome message
+  useEffect(() => {
+    // This Use Effect sets the Game Outcome message
     if (gameStatus === 0) {
       setGameOutcome("Dealer Wins");
-      setComputerBalance(computerBalance+betAmount);
-      setPlayerBalance(playerBalance-betAmount);
+      setComputerBalance(computerBalance + betAmount);
+      setPlayerBalance(playerBalance - betAmount);
     }
     if (gameStatus === 2) {
       setGameOutcome("You Win");
-      setComputerBalance(computerBalance-betAmount);
-      setPlayerBalance(playerBalance+betAmount);
+      setComputerBalance(computerBalance - betAmount);
+      setPlayerBalance(playerBalance + betAmount);
     }
     if (gameStatus === 3) {
       setGameOutcome("Draw");
     }
-    if (gameStatus ===1 ) {
-      setGameOutcome("In Progress")
+    if (gameStatus === 1) {
+      setGameOutcome("In Progress");
     }
   }, [roundProgress, gameStatus]);
 
-  useEffect(() => { // sets Game status to lost once player busts
+  useEffect(() => {
+    // sets Game status to lost once player busts
     let bustResult = cards.bustCheck(playerHand, currentPlayer);
     if (bustResult.bust) {
       setGameStatus(0);
@@ -150,19 +157,20 @@ export default function BattlePage() {
     }
   }, [playerTotal]);
 
-  useEffect(() => { // This Use Effect draws a card for the dealer if necessary
-    if (currentPlayer===1) return;
-    if (currentPlayer===2) {
+  useEffect(() => {
+    // This Use Effect draws a card for the dealer if necessary
+    if (currentPlayer === 1) return;
+    if (currentPlayer === 2) {
       let bustResult = cards.bustCheck(computerHand, currentPlayer);
-      if (computerTotal !== bustResult.total){
+      if (computerTotal !== bustResult.total) {
         setComputerTotal(bustResult.total);
       }
       if (bustResult.total > 21) {
         setGameStatus(2);
         setRoundProgress(false);
       }
-      
-      if (bustResult.total >= 17 && bustResult.total <=21) {
+
+      if (bustResult.total >= 17 && bustResult.total <= 21) {
         if (computerTotal === playerTotal) {
           setGameStatus(3);
           setRoundProgress(false);
@@ -178,20 +186,43 @@ export default function BattlePage() {
       }
 
       if (bustResult.total < 17) {
-        drawCard(2); 
+        drawCard(2);
         return;
       }
-      
     }
-  }, [currentDeck,currentPlayer, computerHand, computerTotal]);
+  }, [currentDeck, currentPlayer, computerHand, computerTotal]);
 
   return (
     <div className="battle-container">
-      <Link className="home-link" to="/home">Home</Link>
-      <Dealer dealerDeck={computerHand} computerBalance={computerBalance} currentPlayer={currentPlayer}/>
-      <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
-      <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
-      <Outcome className = "game-outcome" gameStatus = {gameStatus} outcome={ gameOutcome} constructDeck={constructDeck} />
+      <Link className="home-link" to="/home">
+        Home
+      </Link>
+      <Dealer
+        dealerDeck={computerHand}
+        computerBalance={computerBalance}
+        currentPlayer={currentPlayer}
+      />
+      <Deck
+        deck={currentDeck}
+        betAllow={betAllow}
+        currentPlayer={currentPlayer}
+        drawCard={drawCard}
+        stand={stand}
+        constructDeck={constructDeck}
+        increaseBet={increaseBet}
+      />
+      <Player
+        playerDeck={playerHand}
+        playerTotal={playerTotal}
+        betAmount={betAmount}
+        playerBalance={playerBalance}
+      />
+      <Outcome
+        className="game-outcome"
+        gameStatus={gameStatus}
+        outcome={gameOutcome}
+        constructDeck={constructDeck}
+      />
     </div>
   );
 }
