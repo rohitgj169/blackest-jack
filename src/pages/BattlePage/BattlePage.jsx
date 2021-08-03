@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
-import Outcome from "../../components/UI/Button/Outcome/Outcome";
+import Outcome from "../../components/UI/Outcome/Outcome";
 import cards from "../../utilities/cards";
 
 export default function BattlePage() {
