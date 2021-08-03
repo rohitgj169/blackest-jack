@@ -14,3 +14,9 @@
     font-size: 14rem;
     align-self: center;
 }
+
+.deck-text, .stand-text, .round-text, .bet-text{
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+}

@@ -1,5 +1,6 @@
 import "./BattlePage.css";
 import React, { useState, useEffect } from "react";
+import {Link} from "react-router-dom";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
@@ -186,9 +187,7 @@ export default function BattlePage() {
 
   return (
     <div className="battle-container">
-      {gameOutcome}
-      {gameStatus}
-      {currentPlayer === 1 ? "Player Turn" : "Dealer Turn"}
+      <Link className="home-link" to="/home">Home</Link>
       <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
       <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
