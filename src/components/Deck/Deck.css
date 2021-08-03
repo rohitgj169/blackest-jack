@@ -16,11 +16,6 @@
 }
 
 .deck-text, .stand-text, .round-text, .bet-text{
-    display: none;
-}
-
-.deck-icon:hover + .deck-text{
-    display: block;
     font-size: 2rem;
     text-align: center;
     color: white;
