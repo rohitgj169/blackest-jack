@@ -9,15 +9,15 @@
 
 .card-bar {
     background: #FFF;
-    height: 6rem;
+    height: 15rem;
     margin-top: 7.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
 
-.card-container{
-  display: flex;
-  list-style: none;
-}
-
+.card-slots {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+  }
