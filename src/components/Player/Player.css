@@ -20,3 +20,9 @@
     list-style-type: none;
   }
 
+  /* @media screen and (max-width:1024px) {
+    .deck-icon, .stand-icon, .round-icon, .bet-icon{
+      font-size: 6rem;
+  }
+  } */
+
