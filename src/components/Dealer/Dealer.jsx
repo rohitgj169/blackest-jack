@@ -2,7 +2,7 @@ import React from "react";
 import "./Dealer.css";
 import CardContainer from "../CardContainer/CardContainer";
 
-export default function Dealer({ dealerDeck }) {
+export default function Dealer({ dealerDeck, computerBalance }) {
   // console.log(dealerDeck);
   return (
     <div className="Dealer">
@@ -20,7 +20,7 @@ export default function Dealer({ dealerDeck }) {
             : null}
         </ul>
         <div>
-          <p>Balance:</p>
+          <p>Balance: {computerBalance}</p>
         </div>
       </div>
     </div>

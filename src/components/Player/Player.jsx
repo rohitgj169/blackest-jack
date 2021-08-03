@@ -2,7 +2,7 @@ import React from 'react';
 import './Player.css';
 import CardContainer from '../CardContainer/CardContainer';
 
-export default function Player({playerDeck, playerTotal}) {
+export default function Player({playerDeck, playerTotal, playerBalance, betAmount}) {
   // console.log(playerDeck);
     return (
         <div className="Player">
@@ -21,8 +21,8 @@ export default function Player({playerDeck, playerTotal}) {
                   }
                 </ul>
                 <div>
-                    <p>Bet Amount:</p>
-                    <p>Balance:</p>
+                    <p>Bet Amount: {betAmount}</p>
+                    <p>Balance: {playerBalance}</p>
                     <p>Total: {playerTotal}</p>
                 </div>
             </div>

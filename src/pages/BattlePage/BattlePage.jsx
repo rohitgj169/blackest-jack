@@ -17,9 +17,17 @@ export default function BattlePage() {
   const [computerTotal, setComputerTotal] = useState(0);
   const [roundProgress, setRoundProgress] = useState(false);
 
+  const[betAmount, setBetAmount] = useState(10);
+  const[playerBalance, setPlayerBalance] = useState(1000);
+  const[computerBalance, setComputerBalance] = useState(1000);
+
   const [cardDrawn, setCardDrawn] = useState(false);
 
   const drawCard = (turn) => {
+    if(currentDeck.length === 52){
+      dealCards();
+      return;
+    }
     let newCard = cards.draw(currentDeck);
 
     if (turn === 1) {
@@ -90,6 +98,12 @@ export default function BattlePage() {
     }
   };
 
+  const increaseBet = () =>{
+    setBetAmount((prevState) => {
+      return prevState+10;
+    });
+  };
+
   useEffect(() => { // Creates the deck and shuffles
     constructDeck();
     // dealCards();
@@ -109,9 +123,13 @@ export default function BattlePage() {
   useEffect(() => { // This Use Effect sets the Game Outcome message
     if (gameStatus === 0) {
       setGameOutcome("Dealer Wins");
+      setComputerBalance(computerBalance+betAmount);
+      setPlayerBalance(playerBalance-betAmount);
     }
     if (gameStatus === 2) {
       setGameOutcome("You Win");
+      setComputerBalance(computerBalance-betAmount);
+      setPlayerBalance(playerBalance+betAmount);
     }
     if (gameStatus === 3) {
       setGameOutcome("Draw");
@@ -170,15 +188,9 @@ export default function BattlePage() {
       {gameOutcome}
       {gameStatus}
       {currentPlayer === 1 ? "Player Turn" : "Dealer Turn"}
-      {/* <button onClick={() => drawCard(currentPlayer)}>Draw</button> */}
-      {/* <button onClick={constructDeck}>Round</button> */}
-      <button onClick={dealCards}>Deal</button>
-      {/* <button onClick={help}>Show Hands</button> */}
-      {/* <button onClick={check}>Bust Check</button> */}
-      {/* <button onClick={stand}>Stand</button> */}
-      <Dealer dealerDeck={computerHand} />
-      <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} currentPlayer = {currentPlayer}/>
-      <Player playerDeck={playerHand} playerTotal={playerTotal} />
+      <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
+      <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
+      <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
     </div>
   );
 }
