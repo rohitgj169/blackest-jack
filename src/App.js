@@ -13,7 +13,7 @@ function App() {
           return <BattlePage {...props}/>
         }}/>
         <Route path="/home" render={(props) => {
-          return <LandingPage {...props}/>
+          return <LandingPage className="LandingPage" {...props}/>
         }}/>
         <Redirect to="/home" />
       </Switch>

@@ -1,0 +1,26 @@
+.card {
+    border-radius: .75rem;
+    border: 0.1rem solid black;
+    background: cornsilk;
+    height: 14rem;
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 1rem;
+    
+}
+
+.card-value{
+    align-self: center;
+    justify-self: center;
+}
+
+.card-suit-top{
+    align-self: flex-end;
+}
+
+.card-suit-bottom{
+    align-self: flex-start;
+
+}

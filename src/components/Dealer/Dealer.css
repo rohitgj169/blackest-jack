@@ -10,10 +10,24 @@
 
 .card-bar {
   background: #fff;
-  height: 6rem;
+  height: 15rem;
   margin-top: 7.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   color: #000;
+}
+
+.dealer-card-slots {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+.dealer-card-slots li:nth-child(2){
+  opacity: 0.1;
+}
+
+.hidden-card{
+  opacity: 0;
 }
