@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Player from "../../components/Player/Player";
 import Dealer from "../../components/Dealer/Dealer";
 import Deck from "../../components/Deck/Deck";
+import Outcome from "../../components/UI/Button/Outcome/Outcome";
 import cards from "../../utilities/cards";
 
 export default function BattlePage() {
@@ -20,8 +21,6 @@ export default function BattlePage() {
   const[betAmount, setBetAmount] = useState(10);
   const[playerBalance, setPlayerBalance] = useState(1000);
   const[computerBalance, setComputerBalance] = useState(1000);
-
-  const [cardDrawn, setCardDrawn] = useState(false);
 
   const drawCard = (turn) => {
     if(currentDeck.length === 52){
@@ -176,7 +175,6 @@ export default function BattlePage() {
 
       if (bustResult.total < 17) {
         drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
-        setCardDrawn(true);
         return;
       }
       
@@ -191,6 +189,7 @@ export default function BattlePage() {
       <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
       <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
+      <Outcome/>
     </div>
   );
 }
