@@ -193,7 +193,7 @@ export default function BattlePage() {
       <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
       <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
-      <Outcome outcome={gameOutcome}/>
+      <Outcome className = "game-outcome" gameStatus = {gameStatus} outcome={ gameOutcome}/>
     </div>
   );
 }

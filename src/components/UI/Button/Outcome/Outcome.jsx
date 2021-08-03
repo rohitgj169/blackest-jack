@@ -1,10 +1,17 @@
 import React from 'react'
+import './Outcome.css'
 
-export default function Outcome() {
+export default function Outcome({gameStatus, outcome}) {
     return (
         
         <div>
-            Game Outcome
+            {gameStatus !== 1 
+            ? 
+                <div className="game-outcome">{outcome}</div>
+            :
+            null
+            }
+
         </div>
     )
 }
