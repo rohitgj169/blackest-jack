@@ -43,7 +43,6 @@ function draw(deck) {
   // draw a random card from the deck
   // returns card object
   let card = deck.pop();
-  console.log(card);
   return card;
 }
 
@@ -73,24 +72,19 @@ function bustCheck(hand, player) {
     }
   });
   if (total > 21) {
-    console.log("BUST! Total: ", total);
     return {
       total, 
       bust: true,
     }
   } else if (total < 12 && aces.length > 0) {
     total += 10;
-    console.log("Soft hand total: ", total);
     if (total === 21) {
-      console.log("Soft Win!", total);
     }
     return {
       total, 
       bust: false,
     };
   } else {
-    if(player === 1) console.log("Player:",total);
-    if(player === 2) console.log("Computer:",total);
     return {
       total:total, 
       bust: false,

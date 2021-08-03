@@ -1,5 +1,4 @@
 .Dealer {
-  border-radius: 1rem;
   border: 0.01rem solid #373737;
   background: #373737;
   padding: 1rem 0;
@@ -10,13 +9,15 @@
 
 .card-bar {
   background: #fff;
-  height: 15rem;
   margin-top: 7.5rem;
+  height: 60%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   color: #000;
 }
+
+
 
 .dealer-card-slots {
   display: flex;

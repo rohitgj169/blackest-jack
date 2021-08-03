@@ -178,7 +178,7 @@ export default function BattlePage() {
       }
 
       if (bustResult.total < 17) {
-        drawCard(2); // Asynchronous issue, does not update the computer Hand in time for comparison to player Hand
+        drawCard(2); 
         return;
       }
       
