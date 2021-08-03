@@ -103,6 +103,10 @@ export default function BattlePage() {
     });
   };
 
+  const showOutcome = () => {
+
+  }
+
   useEffect(() => { // Creates the deck and shuffles
     constructDeck();
     // dealCards();
@@ -189,7 +193,7 @@ export default function BattlePage() {
       <Dealer dealerDeck={computerHand} computerBalance={computerBalance} />
       <Deck deck ={currentDeck} drawCard = {drawCard} stand = {stand} constructDeck = {constructDeck} increaseBet = {increaseBet} currentPlayer = {currentPlayer}/>
       <Player playerDeck={playerHand} playerTotal={playerTotal} betAmount = {betAmount} playerBalance={playerBalance}/>
-      <Outcome/>
+      <Outcome outcome={gameOutcome}/>
     </div>
   );
 }
