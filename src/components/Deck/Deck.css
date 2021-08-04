@@ -1,33 +1,42 @@
 .Deck {
-    border-radius: 1rem;
-    border: .01rem solid #773377;
-    background: #773377;
-    padding: 1rem 0;
-    margin: 1rem;
-    height: 30vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  border-radius: 1rem;
+  border: 0.01rem solid #773377;
+  background: #773377;
+  padding: 1rem 0;
+  margin: 1rem;
+  height: 30vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.deck-icon, .stand-icon, .round-icon, .bet-icon{
-    font-size: 10rem;
-    align-self: center;
-    cursor: pointer;
+.deck-icon,
+.stand-icon,
+.round-icon,
+.bet-icon {
+  font-size: 10rem;
+  align-self: center;
+  cursor: pointer;
 }
 
-.deck-text, .stand-text, .round-text, .bet-text{
-    font-size: 2rem;
-    text-align: center;
-    color: white;
+.deck-text,
+.stand-text,
+.round-text,
+.bet-text {
+  font-size: 2rem;
+  text-align: center;
+  color: white;
 }
 
 .hidden {
   opacity: 0;
 }
 
-@media screen and (max-width:1024px) {
-  .deck-icon, .stand-icon, .round-icon, .bet-icon{
+@media screen and (max-width: 1024px) {
+  .deck-icon,
+  .stand-icon,
+  .round-icon,
+  .bet-icon {
     font-size: 6rem;
-}
+  }
 }

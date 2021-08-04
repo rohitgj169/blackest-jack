@@ -1,29 +1,29 @@
-.game-outcome{
-    position: absolute;
+.game-outcome {
+  position: absolute;
+  top: 50%;
+  margin-top: -8rem;
+  left: 50%;
+  margin-left: -35rem;
+  font-size: 10rem;
+  text-align: center;
+  width: 70rem;
+  background: rgba(201, 76, 76, 0.95);
+  border: 1px solid #ccc;
+}
+
+.next-round {
+  font-size: 2rem;
+  color: cyan;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .game-outcome {
     top: 50%;
-    margin-top: -8rem;
+    margin-top: -4.5rem;
     left: 50%;
-    margin-left: -35rem;
-    font-size: 10rem;
-    text-align: center;
-    width: 70rem;
-    background: rgba(201,76,76, 0.95);
-    border: 1px solid #ccc;
+    margin-left: -15rem;
+    font-size: 5rem;
+    width: 30rem;
   }
-
-  .next-round{
-    font-size: 2rem;
-    color: cyan;
-    cursor: pointer;
-  }
-
-  @media screen and (max-width:1024px) {
-    .game-outcome{
-      top: 50%;
-      margin-top: -4.5rem;
-      left: 50%;
-      margin-left: -15rem;
-      font-size: 5rem;
-      width: 30rem;
-    }
-  }
+}

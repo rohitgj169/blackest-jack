@@ -17,14 +17,12 @@
   color: #000;
 }
 
-
-
 .dealer-card-slots {
   display: flex;
   flex-direction: row;
   list-style-type: none;
 }
 
-.dealer-card-1{
+.dealer-card-1 {
   opacity: 0;
 }

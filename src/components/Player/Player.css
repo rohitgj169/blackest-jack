@@ -1,28 +1,27 @@
 .Player {
-    border: .01rem solid #737373;
-    background: #737373;
-    padding: 1rem 0;
-    margin: 1rem;
-    height: 30vh;
+  border: 0.01rem solid #737373;
+  background: #737373;
+  padding: 1rem 0;
+  margin: 1rem;
+  height: 30vh;
 }
 
 .card-bar {
-    background: #FFF;
-    margin-top: 7.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  background: #fff;
+  margin-top: 7.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .card-slots {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-  }
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
 
-  /* @media screen and (max-width:1024px) {
+@media screen and (max-width:1024px) {
     .deck-icon, .stand-icon, .round-icon, .bet-icon{
       font-size: 6rem;
   }
-  } */
-
+  }

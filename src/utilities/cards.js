@@ -73,20 +73,20 @@ function bustCheck(hand, player) {
   });
   if (total > 21) {
     return {
-      total, 
+      total,
       bust: true,
-    }
+    };
   } else if (total < 12 && aces.length > 0) {
     total += 10;
     if (total === 21) {
     }
     return {
-      total, 
+      total,
       bust: false,
     };
   } else {
     return {
-      total:total, 
+      total: total,
       bust: false,
     };
   }

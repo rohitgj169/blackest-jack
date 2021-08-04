@@ -108,7 +108,6 @@ export default function BattlePage() {
     });
   };
 
-
   useEffect(() => {
     // Creates the deck and shuffles
     constructDeck();

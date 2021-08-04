@@ -8,7 +8,6 @@ export default function Dealer({
   currentPlayer,
   computerTotal,
 }) {
-  console.log(dealerDeck);
 
   const calcTotal = () => {
     if (dealerDeck.length < 1) return 0;
@@ -27,10 +26,11 @@ export default function Dealer({
     }
   };
 
-  const realTotal = calcTotal();
+  const displayTotal = calcTotal();
 
   return (
     <div className="Dealer">
+      <div>Dealer</div>
       <div className="card-bar">
         {/* Card Components, Balance*/}
         <ul className="dealer-card-slots">
@@ -51,8 +51,7 @@ export default function Dealer({
         </ul>
         <div>
           <p>Balance: {computerBalance}</p>
-          {/* <p>Total: {`${currentPlayer === 1 ? dealerDeck[0].value : total}`}</p> */}
-          <p>Total : {realTotal}</p>
+          <p>Total : {displayTotal}</p>
         </div>
       </div>
     </div>
