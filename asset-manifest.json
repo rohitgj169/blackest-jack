@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/blackest-jack/static/css/main.26972236.chunk.css",
-    "main.js": "/blackest-jack/static/js/main.f86c1bff.chunk.js",
-    "main.js.map": "/blackest-jack/static/js/main.f86c1bff.chunk.js.map",
+    "main.js": "/blackest-jack/static/js/main.61f5641f.chunk.js",
+    "main.js.map": "/blackest-jack/static/js/main.61f5641f.chunk.js.map",
     "runtime-main.js": "/blackest-jack/static/js/runtime-main.37b42572.js",
     "runtime-main.js.map": "/blackest-jack/static/js/runtime-main.37b42572.js.map",
-    "static/js/2.fe4a1d26.chunk.js": "/blackest-jack/static/js/2.fe4a1d26.chunk.js",
-    "static/js/2.fe4a1d26.chunk.js.map": "/blackest-jack/static/js/2.fe4a1d26.chunk.js.map",
+    "static/js/2.2ddee1d3.chunk.js": "/blackest-jack/static/js/2.2ddee1d3.chunk.js",
+    "static/js/2.2ddee1d3.chunk.js.map": "/blackest-jack/static/js/2.2ddee1d3.chunk.js.map",
     "index.html": "/blackest-jack/index.html",
     "static/css/main.26972236.chunk.css.map": "/blackest-jack/static/css/main.26972236.chunk.css.map",
-    "static/js/2.fe4a1d26.chunk.js.LICENSE.txt": "/blackest-jack/static/js/2.fe4a1d26.chunk.js.LICENSE.txt"
+    "static/js/2.2ddee1d3.chunk.js.LICENSE.txt": "/blackest-jack/static/js/2.2ddee1d3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.37b42572.js",
-    "static/js/2.fe4a1d26.chunk.js",
+    "static/js/2.2ddee1d3.chunk.js",
     "static/css/main.26972236.chunk.css",
-    "static/js/main.f86c1bff.chunk.js"
+    "static/js/main.61f5641f.chunk.js"
   ]
 }
