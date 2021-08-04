@@ -72,7 +72,7 @@ export default function BattlePage() {
     setGameStatus(1);
     setCurrentPlayer(1);
     setBetAllow(true);
-    setBetAmount(10);
+    setBetAmount(0);
   };
 
   const dealCards = () => {
@@ -82,18 +82,18 @@ export default function BattlePage() {
     setBetAllow(false);
   };
 
-  const help = () => {
-    console.log("Deck = ", currentDeck);
-    console.log("Player Hand =", playerHand);
-    console.log("Computer Hand =", computerHand);
-    console.log("Player Total =", playerTotal);
-    console.log("Computer Total =", computerTotal);
-  };
+  // const help = () => {
+  //   console.log("Deck = ", currentDeck);
+  //   console.log("Player Hand =", playerHand);
+  //   console.log("Computer Hand =", computerHand);
+  //   console.log("Player Total =", playerTotal);
+  //   console.log("Computer Total =", computerTotal);
+  // };
 
-  const check = () => {
-    if (currentPlayer === 1) cards.bustCheck(playerHand, currentPlayer);
-    if (currentPlayer === 2) cards.bustCheck(computerHand, currentPlayer);
-  };
+  // const check = () => {
+  //   if (currentPlayer === 1) cards.bustCheck(playerHand, currentPlayer);
+  //   if (currentPlayer === 2) cards.bustCheck(computerHand, currentPlayer);
+  // };
 
   const stand = () => {
     if (currentPlayer === 1) {
@@ -108,7 +108,6 @@ export default function BattlePage() {
     });
   };
 
-  const showOutcome = () => {};
 
   useEffect(() => {
     // Creates the deck and shuffles
@@ -201,6 +200,7 @@ export default function BattlePage() {
         dealerDeck={computerHand}
         computerBalance={computerBalance}
         currentPlayer={currentPlayer}
+        computerTotal={computerTotal}
       />
       <Deck
         deck={currentDeck}
