@@ -11,7 +11,7 @@ export default function Player({
   // console.log(playerDeck);
   return (
     <div className="Player">
-      <div>Player</div>
+      <div className="player-header">Player</div>
       <div className="card-bar">
         {/* Card Components (max 5 slots), Bet Amount, Balance*/}
         <ul className="card-slots">

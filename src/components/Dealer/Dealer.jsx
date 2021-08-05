@@ -30,7 +30,7 @@ export default function Dealer({
 
   return (
     <div className="Dealer">
-      <div>Dealer</div>
+      <div className="dealer-header">Dealer</div>
       <div className="card-bar">
         {/* Card Components, Balance*/}
         <ul className="dealer-card-slots">
@@ -49,7 +49,7 @@ export default function Dealer({
               })
             : null}
         </ul>
-        <div>
+        <div className="dealer-info">
           <p>Balance: {computerBalance}</p>
           <p>Total : {displayTotal}</p>
         </div>
